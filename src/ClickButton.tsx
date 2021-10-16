@@ -30,14 +30,14 @@ class ClickButton extends React.Component<ClickButtonProps, ClickButtonState> {
     count: 0,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.unsubscribeCounter = this.counter.onSnapshot(doc => {
       const data = doc.data();
       if (!data) {
         this.counter.set({});
       } else {
         this.setState(state => ({
-          count: data.value,
+          count: data.value
         }));
       }
     });
@@ -52,7 +52,7 @@ class ClickButton extends React.Component<ClickButtonProps, ClickButtonState> {
   render() {  
     return (
       <div>
-        <Button onClick={() => this.increment(1)}>
+        <Button onClick={() => this.increment()}>
           Clicks: {this.state.count}
         </Button>
         <Warning>
@@ -62,14 +62,10 @@ class ClickButton extends React.Component<ClickButtonProps, ClickButtonState> {
     );
   }
 
-  async increment(amt: number) {
-    this.counter.update({
+  async increment() {
+    await this.counter.update({
       value: firebase.firestore.FieldValue.increment(1)
     });
-
-    this.setState(state => ({
-      count: state.count + amt,
-    }));
   };
 
 }
