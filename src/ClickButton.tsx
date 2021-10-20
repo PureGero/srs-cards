@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import firebase from 'firebase';
 
@@ -13,61 +13,55 @@ const Warning = styled.div`
   color: #ff7777;
 `;
 
-interface ClickButtonProps {
-  
-}
+const ClickButton = () => {
+  const db = firebase.firestore();
+  const counter = db.collection('counts').doc('counter');
 
-interface ClickButtonState {
-  count: number;
-}
+  const [count, setCount] = useState(0);
+  const [message, setMessage] = useState('Loading...');
 
-class ClickButton extends React.Component<ClickButtonProps, ClickButtonState> {
-  db = firebase.firestore();
-  counter = this.db.collection('counts').doc('counter');
-  unsubscribeCounter?: () => void;
-
-  state = {
-    count: 0,
-  };
-
-  componentDidMount() {
-    this.unsubscribeCounter = this.counter.onSnapshot(doc => {
+  useEffect(() => {
+    const unsubscribeCounter = counter.onSnapshot(doc => {
       const data = doc.data();
+      setMessage('');
       if (!data) {
-        this.counter.set({});
+        counter.set({});
       } else {
-        this.setState(state => ({
-          count: data.value
-        }));
+        setCount(data.value);
       }
     });
-  }
 
-  componentWillUnmount() {
-    if (this.unsubscribeCounter) {
-      this.unsubscribeCounter();
+    (async () => {
+      try {
+        await counter.get();
+      } catch (e) {
+        setMessage('Today\'s clicking limit has been reached, come back tomorrow!');
+      }
+    })();
+
+    return unsubscribeCounter;
+  });
+
+  const increment = async () => {
+    try {
+      await counter.update({
+        value: firebase.firestore.FieldValue.increment(1)
+      });
+    } catch (e) {
+      setMessage('Today\'s clicking limit has been reached, come back tomorrow!');
     }
-  }
-
-  render() {  
-    return (
-      <div>
-        <Button onClick={() => this.increment()}>
-          Clicks: {this.state.count}
-        </Button>
-        <Warning>
-          Limited to 20,000 clicks per day
-        </Warning>
-      </div>
-    );
-  }
-
-  async increment() {
-    await this.counter.update({
-      value: firebase.firestore.FieldValue.increment(1)
-    });
   };
 
+  return (
+    <div>
+      <Button onClick={() => increment()}>
+        {message ? message : `Clicks: ${count}`}
+      </Button>
+      <Warning>
+        Limited to 20,000 clicks per day
+      </Warning>
+    </div>
+  );
 }
 
 export default ClickButton;
