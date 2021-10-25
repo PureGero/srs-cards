@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import firebase from 'firebase/app';
@@ -18,7 +19,7 @@ const Warning = styled.div`
 const DeckList = () => {
   const myDecks = firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).collection('decks');
 
-  const [decks, setDecks] = useState([]);
+  const [decks, setDecks] = useState<any[]>([]);
 
   useEffect(() => {
     const unsubscribeDecks = myDecks.onSnapshot(doc => {
@@ -30,7 +31,7 @@ const DeckList = () => {
 
   return (
     <div>
-      <h1>Welcome {firebase.auth().currentUser && firebase.auth().currentUser.displayName}!</h1>
+      <h1>Welcome {firebase.auth().currentUser?.displayName}!</h1>
         <Button onClick={() => firebase.auth().signOut()}>Sign-out</Button>
       <p>
         Your decks: {JSON.stringify(decks)}
