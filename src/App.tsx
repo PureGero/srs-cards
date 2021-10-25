@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import styled from 'styled-components';
 import AppLogo from './AppLogo';
 import ClickButton from './ClickButton';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { StyledFirebaseAuth } from 'react-firebaseui';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
