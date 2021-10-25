@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import logo from './logo.svg';
 import styled from 'styled-components';
 import AppLogo from './AppLogo';
-import ClickButton from './ClickButton';
+import DeckList from './DeckList';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 
 import firebase from 'firebase/app';
@@ -81,10 +82,11 @@ const App = () => {
   return (
     <AppContainer>
       <AppHeader>
-        <p>Welcome {auth.currentUser && auth.currentUser.displayName}! You are now signed-in!</p>
-        <button onClick={() => auth.signOut()}>Sign-out</button>
-        <AppLogo src={logo} alt="logo" />
-        <ClickButton />
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" component={DeckList} />
+          </Switch>
+        </BrowserRouter>
       </AppHeader>
     </AppContainer>
   );

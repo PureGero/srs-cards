@@ -4,7 +4,9 @@ dist
 dist-ssr
 *.local
 
+.cache
 .replit
+replit.nix
 
 npm-debug.log*
 pnpm-lock.yaml
