@@ -6,6 +6,7 @@ import ClickButton from './ClickButton';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 import firebase from 'firebase/app';
+import 'firebase/auth';
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_API_KEY,
