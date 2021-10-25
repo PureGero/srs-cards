@@ -52,6 +52,7 @@ const App = () => {
     return unregisterAuthObserver;
   }, []);
 
+  // Loading auth state
   if (isSignedIn === null) {
     return (
       <AppContainer>
@@ -63,11 +64,12 @@ const App = () => {
     );
   }
 
+  // Not signed in state
   if (!isSignedIn) {
     return (
       <AppContainer>
         <AppHeader>
-          <h1>SRS Cards</h1>
+          <h1>SRS Tester</h1>
           <p>Please sign-in:</p>
           <StyledFirebaseAuth uiConfig={authUiConfig} firebaseAuth={auth} />
         </AppHeader>
@@ -75,6 +77,7 @@ const App = () => {
     );
   }
 
+  // Signed in
   return (
     <AppContainer>
       <AppHeader>
