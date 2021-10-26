@@ -12,7 +12,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const Warning = styled.div`
+const ErrorMessage = styled.div`
   color: #ff7777;
 `;
 
@@ -20,12 +20,20 @@ const DeckList = () => {
   const myDecks = firebase.firestore().collection('users').doc(firebase.auth().currentUser?.uid).collection('decks');
 
   const [decks, setDecks] = useState<any[]>([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     console.log(`Subscribing to ${myDecks.path}`);
 
     const unsubscribeDecks = myDecks.onSnapshot(doc => {
       setDecks(doc.docs);
+    }, error => {
+      console.error(error);
+      if (error.code == 'resource-exhausted') {
+        setMessage('The free-tier quota has been exceeded.');
+      } else {
+        setMessage(error.message);
+      }
     });
 
     return unsubscribeDecks;
@@ -35,12 +43,12 @@ const DeckList = () => {
     <div>
       <h1>Welcome {firebase.auth().currentUser?.displayName}!</h1>
         <Button onClick={() => firebase.auth().signOut()}>Sign-out</Button>
+      <ErrorMessage>
+        { message ? message : '' }
+      </ErrorMessage>
       <p>
         Your decks: {JSON.stringify(decks)}
       </p>
-      <Warning>
-        Limited to 20,000 clicks per day
-      </Warning>
     </div>
   );
 }
