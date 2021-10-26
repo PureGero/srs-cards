@@ -22,12 +22,14 @@ const DeckList = () => {
   const [decks, setDecks] = useState<any[]>([]);
 
   useEffect(() => {
+    console.log(`Subscribing to ${myDecks.path}`);
+
     const unsubscribeDecks = myDecks.onSnapshot(doc => {
       setDecks(doc.docs);
     });
 
     return unsubscribeDecks;
-  });
+  }, []);
 
   return (
     <div>
