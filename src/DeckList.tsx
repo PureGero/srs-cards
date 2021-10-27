@@ -5,6 +5,8 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
+import CreateDeckButton from './CreateDeckButton';
+
 const Button = styled.button`
   margin: 20px;
   padding: 10px 20px;
@@ -42,10 +44,11 @@ const DeckList = () => {
   return (
     <div>
       <h1>Welcome {firebase.auth().currentUser?.displayName}!</h1>
-        <Button onClick={() => firebase.auth().signOut()}>Sign-out</Button>
+      <Button onClick={() => firebase.auth().signOut()}>Sign-out</Button>
       <ErrorMessage>
         { message ? message : '' }
       </ErrorMessage>
+      <CreateDeckButton />
       <p>
         Your decks: {JSON.stringify(decks)}
       </p>

@@ -4,6 +4,7 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import logo from './logo.svg';
 import styled from 'styled-components';
 import AppLogo from './AppLogo';
+import Deck from './Deck';
 import DeckList from './DeckList';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 
@@ -85,6 +86,7 @@ const App = () => {
       <AppHeader>
         <BrowserRouter>
           <Switch>
+            <Route path="/deck/:deckId" component={Deck} />
             <Route path="/" component={DeckList} />
           </Switch>
         </BrowserRouter>
