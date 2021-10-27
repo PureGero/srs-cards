@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import AppLogo from './AppLogo';
 import Deck from './Deck';
 import DeckList from './DeckList';
+import SignIn from './SignIn';
+import PrivateRoute from './PrivateRoute';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 
 import firebase from 'firebase/app';
@@ -21,14 +23,6 @@ firebase.initializeApp({
 });
 
 const auth = firebase.auth();
-
-const authUiConfig = {
-  signInFlow: 'popup',
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-  ]
-};
 
 const AppContainer = styled.div`
   text-align: center;
@@ -67,27 +61,17 @@ const App = () => {
     );
   }
 
-  // Not signed in state
-  if (!isSignedIn) {
-    return (
-      <AppContainer>
-        <AppHeader>
-          <h1>SRS Tester</h1>
-          <p>Please sign-in:</p>
-          <StyledFirebaseAuth uiConfig={authUiConfig} firebaseAuth={auth} />
-        </AppHeader>
-      </AppContainer>
-    );
-  }
-
   // Signed in
   return (
     <AppContainer>
       <AppHeader>
         <BrowserRouter>
           <Switch>
+            
+            <Route path="/login" component={SignIn} />
             <Route path="/deck/:deckId" component={Deck} />
-            <Route path="/" component={DeckList} />
+            <PrivateRoute path="/" component={DeckList} />
+
           </Switch>
         </BrowserRouter>
       </AppHeader>
