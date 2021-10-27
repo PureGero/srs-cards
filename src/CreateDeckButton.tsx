@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import firebase from 'firebase/app';
@@ -7,7 +7,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const Button = styled.button`
-  margin: 20px;
+  margin: 20px 0;
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;

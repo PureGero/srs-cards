@@ -6,6 +6,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 import CreateDeckButton from './CreateDeckButton';
+import DeckListItem from './DeckListItem';
 
 const Button = styled.button`
   margin: 20px;
@@ -49,9 +50,9 @@ const DeckList = () => {
         { message ? message : '' }
       </ErrorMessage>
       <CreateDeckButton />
-      <p>
-        Your decks: {JSON.stringify(decks)}
-      </p>
+      {decks.map(deck => 
+        <DeckListItem key={deck.id} deckId={deck.id} />
+      )}
     </div>
   );
 }

@@ -26,8 +26,8 @@ const DeckList = () => {
 
   return (
     <div>
+      <Link to="/">&lt; View your decks</Link>
       <h1>Deck: {deckId}</h1>
-      <Link to="/">View your decks</Link>
     </div>
   );
 }
