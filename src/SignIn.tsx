@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { StyledFirebaseAuth } from 'react-firebaseui';
 
 import firebase from 'firebase/app';
@@ -6,6 +8,15 @@ import 'firebase/auth';
 
 const SignIn = () => {
   const auth = firebase.auth();
+
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    const unregisterAuthObserver = auth.onAuthStateChanged(user => {
+      setIsSignedIn(!!user);
+    });
+    return unregisterAuthObserver;
+  }, []);
   
   const authUiConfig = {
     signInFlow: 'popup',
@@ -14,6 +25,10 @@ const SignIn = () => {
       firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ]
   };
+
+  if (isSignedIn) {
+    return <Redirect to={{ pathname: "/" }} />
+  }
 
   return (
     <div>

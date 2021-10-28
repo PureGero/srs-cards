@@ -68,9 +68,9 @@ const App = () => {
         <BrowserRouter>
           <Switch>
             
-            <Route path="/login" component={SignIn} />
-            <Route path="/deck/:deckId" component={Deck} />
-            <PrivateRoute path="/" component={DeckList} />
+            <Route path="/login"><SignIn /></Route>
+            <Route path="/deck/:deckId"><Deck /></Route>
+            <PrivateRoute path="/"><DeckList /></PrivateRoute>
 
           </Switch>
         </BrowserRouter>

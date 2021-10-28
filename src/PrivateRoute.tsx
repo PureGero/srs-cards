@@ -12,7 +12,7 @@ const PrivateRoute = (props: RouteProps) => {
       path={props.path}
       render={({ location }) =>
         auth.currentUser ? (
-          props.component
+          props.children
         ) : (
           <Redirect
             to={{
