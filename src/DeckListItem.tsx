@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import 'firebase/auth';
 
 const Button = styled.button`
   margin: 10px 0;
